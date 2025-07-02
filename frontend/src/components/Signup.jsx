@@ -1,16 +1,26 @@
 import React, { useState } from "react";
+import { supabase } from "../supabaseClient";
 
 export default function Signup() {
   const [form, setForm] = useState({ name: "", dob: "", email: "" });
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Send form data to backend API
-    alert("Signup submitted! (Backend integration needed)");
+    setMessage("Submitting...");
+    const { data, error } = await supabase
+      .from("trainees")
+      .insert([{ name: form.name, dob: form.dob, email: form.email }]);
+    if (error) {
+      setMessage("Error: " + error.message);
+    } else {
+      setMessage("Signup successful!");
+      setForm({ name: "", dob: "", email: "" });
+    }
   };
 
   return (
@@ -31,6 +41,7 @@ export default function Signup() {
       </label>
       <br />
       <button type="submit">Sign Up</button>
+      <div>{message}</div>
     </form>
   );
 } 
