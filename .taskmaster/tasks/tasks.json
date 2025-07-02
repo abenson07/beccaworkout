@@ -21,7 +21,62 @@
         "priority": "high",
         "dependencies": [],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design Signup Form",
+            "description": "Create a user-friendly signup form for trainees to input their name, date of birth, and email.",
+            "dependencies": [],
+            "details": "The form should include fields for name, date of birth, and email, with appropriate labels and placeholders.",
+            "status": "in-progress",
+            "testStrategy": "Manual testing to ensure all fields are present and correctly labeled."
+          },
+          {
+            "id": 2,
+            "title": "Implement Input Validation",
+            "description": "Add validation logic to ensure that the input fields are filled out correctly.",
+            "dependencies": [
+              1
+            ],
+            "details": "Validate that the name is not empty, the date of birth is a valid date, and the email is in the correct format.",
+            "status": "pending",
+            "testStrategy": "Unit tests for validation functions and manual testing for form submission."
+          },
+          {
+            "id": 3,
+            "title": "Develop Backend Logic",
+            "description": "Create the backend logic to handle form submissions and store user data in the database.",
+            "dependencies": [
+              2
+            ],
+            "details": "Implement API endpoints to receive form data, validate it, and save it to the database.",
+            "status": "pending",
+            "testStrategy": "Integration tests to ensure data is correctly saved and error handling works."
+          },
+          {
+            "id": 4,
+            "title": "Set Up Database Schema",
+            "description": "Design and implement the database schema for storing trainee account information.",
+            "dependencies": [
+              3
+            ],
+            "details": "Create tables for user accounts with fields for name, date of birth, email, and any necessary timestamps.",
+            "status": "pending",
+            "testStrategy": "Database migration tests to ensure schema is created correctly."
+          },
+          {
+            "id": 5,
+            "title": "Implement Confirmation Email Service",
+            "description": "Integrate a service to send a confirmation email upon successful signup.",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Use an email service provider to send a confirmation email with a verification link after account creation.",
+            "status": "pending",
+            "testStrategy": "End-to-end testing to verify that emails are sent and received correctly."
+          }
+        ]
       },
       {
         "id": 3,
@@ -129,7 +184,7 @@
     ],
     "metadata": {
       "created": "2025-07-02T18:32:40.858Z",
-      "updated": "2025-07-02T18:33:58.817Z",
+      "updated": "2025-07-02T18:46:42.609Z",
       "description": "Tasks for master context"
     }
   }
