@@ -1,0 +1,136 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup Project Repository",
+        "description": "Initialize the project repository for the workout app, including version control setup and initial project structure.",
+        "details": "Create a new Git repository, set up a basic directory structure for frontend and backend components, and initialize package.json files for both parts. Ensure to include a README.md file with project overview and setup instructions.\n<info added on 2025-07-02T18:34:02.752Z>\nStep-by-step plan for setting up the project repository: 1. Initialize a new Git repository in the project root. 2. Create a directory structure with separate folders for frontend and backend components (e.g., 'frontend/' and 'backend/'). 3. Inside each folder, initialize a new package.json (use npm init -y for Node.js projects). 4. Add a README.md file at the project root with a project overview and setup instructions. 5. Create a .gitignore file to exclude node_modules and other unnecessary files. 6. Make an initial commit with the basic structure. 7. (Optional) Set up remote repository (e.g., GitHub) and push the initial commit.\n</info added on 2025-07-02T18:34:02.752Z>",
+        "testStrategy": "Verify repository is created successfully and is accessible to all team members.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "in-progress",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Implement Trainee Account Creation",
+        "description": "Develop the functionality for trainees to create an account, including input validation and confirmation email.",
+        "details": "Create a signup form for trainees to input their name, date of birth, and email. Implement backend logic to handle form submission, validate inputs, and store user data in the database. Use a service to send a confirmation email upon successful signup.",
+        "testStrategy": "Test the signup process with valid and invalid inputs, ensuring confirmation emails are sent and received.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Create Admin Movement Management Interface",
+        "description": "Develop the admin interface for managing movements, including adding, categorizing, and editing movements.",
+        "details": "Build a web interface for admins to add new movements with title, description, and video upload. Implement categorization features and ensure proper validation of inputs. Integrate with the Movement Library Service to store and retrieve movements.",
+        "testStrategy": "Test the admin interface for adding, editing, and categorizing movements, ensuring all data is correctly stored in the database.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Implement Trainer Movement Library Access",
+        "description": "Allow trainers to view and search the movement library, including filtering by categories.",
+        "details": "Create a frontend interface for trainers to access the movement library. Implement search and filter functionalities to allow trainers to find movements by name and category. Ensure data is fetched from the Movement Library Service.",
+        "testStrategy": "Test the trainer interface for searching and filtering movements, ensuring accurate results are displayed.",
+        "priority": "high",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Build Workout Template Creation Feature",
+        "description": "Develop the functionality for trainers to create workout templates by selecting movements and defining parameters.",
+        "details": "Create a workout builder interface where trainers can select movements from the library, specify sets, reps, weight, and add notes. Implement logic to save these templates in the Workout Builder Service.",
+        "testStrategy": "Test the workout template creation process, ensuring templates are saved correctly and can be retrieved.",
+        "priority": "high",
+        "dependencies": [
+          4
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Implement Scheduling of Workout Instances",
+        "description": "Allow trainers to assign workout templates to clients on specific dates, including one-time and recurring assignments.",
+        "details": "Develop the scheduling interface for trainers to assign workouts to clients. Implement logic to handle one-time and recurring assignments, integrating with the Scheduling Service.",
+        "testStrategy": "Test the scheduling functionality for both one-time and recurring workouts, ensuring clients see the correct assignments.",
+        "priority": "high",
+        "dependencies": [
+          5
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Create Client Assignment Feature",
+        "description": "Implement functionality for trainers to assign existing clients to their accounts, including confirmation prompts.",
+        "details": "Build the client management interface for trainers to view available clients and assign them. Include confirmation prompts to prevent accidental assignments.",
+        "testStrategy": "Test the client assignment process, ensuring clients are correctly associated with trainers and notifications are sent.",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Implement Workout Instance Editing",
+        "description": "Allow trainers to modify existing workout instances for clients, including changing parameters and adding custom notes.",
+        "details": "Create an interface for trainers to access and edit specific workout instances. Implement logic to ensure changes are reflected immediately in the client's app.",
+        "testStrategy": "Test the editing functionality for workout instances, ensuring changes are saved and displayed correctly.",
+        "priority": "medium",
+        "dependencies": [
+          6
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Develop Unassignment Flow for Clients",
+        "description": "Implement the flow for trainers to unassign clients, including confirmation prompts and data retention.",
+        "details": "Build the unassignment interface for trainers to remove clients from their roster. Ensure that all past workout records remain accessible to the trainee and that notifications are sent.",
+        "testStrategy": "Test the unassignment process, ensuring data retention and proper notifications are handled.",
+        "priority": "medium",
+        "dependencies": [
+          7
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Implement Workout Deletion Logic",
+        "description": "Allow trainers to delete workout templates and instances, ensuring data preservation for historical tracking.",
+        "details": "Develop the deletion interface for trainers to remove workout templates and instances. Implement soft delete logic to retain performance data while removing visibility from the client's schedule.",
+        "testStrategy": "Test the deletion functionality, ensuring that deleted workouts are removed from views but data is preserved.",
+        "priority": "medium",
+        "dependencies": [
+          5,
+          6
+        ],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-02T18:32:40.858Z",
+      "updated": "2025-07-02T18:33:58.817Z",
+      "description": "Tasks for master context"
+    }
+  }
+}

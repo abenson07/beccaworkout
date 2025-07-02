@@ -1,0 +1,1090 @@
+Overview
+The workout app is designed to streamline the process of creating, assigning, managing, and tracking personalized workout programs for trainers and their clients. It addresses the challenge of delivering tailored fitness guidance efficiently, ensuring data integrity, and fostering clear communication between trainers and trainees. The product aims to enhance the personalized fitness journey for trainees while empowering trainers to effectively manage their client rosters and program evolution.
+
+Core Features
+1. Creating a Trainee Account
+What it does: This feature allows new individuals to independently sign up for an account as a trainee. They provide essential personal and contact information (name, date of birth, email) to establish their unique profile. Upon successful signup, trainees receive a confirmation and gain immediate access to their personal dashboard. 
+
+
+
+Why it's important: This is foundational to the entire product, enabling rapid user acquisition by reducing onboarding friction. 
+
+
+How it works at a high level: A new trainee accesses a signup interface, inputs their details, receives a confirmation, and is then directed to their personal dashboard. 
+
+
+2. Managing Movements (Admin & Trainer)
+
+What it does: This feature provides a centralized, admin-controlled library of individual exercises, called "movements." Each movement includes a title, description, and an accompanying video/GIF. Admins add and categorize movements (e.g., "Lower Body," "Upper Body," muscle groups) and review trainer requests for new variations. Trainers can search and filter this library, view movement details (video, description), and request new movement variations. Trainees can view the visual demonstrations and descriptions of assigned movements. 
+
+
+
+
+
+
+Why it's important: It ensures consistency and accuracy across the platform, provides trainers with a comprehensive toolkit, supports specialization, improves trainee understanding and safety, and facilitates scalability. 
+
+How it works at a high level: Admins manage the master movement library. Trainers access this library to select movements for workouts. Trainees view the movement details within their assigned workouts. 
+
+
+
+
+
+3. Building a Workout (Template Creation)
+
+What it does: This feature allows trainers to create reusable workout templates by selecting movements from the movement library and ordering them. Trainers can specify parameters like sets, reps, weight (lbs, percentage, or bodyweight), or time for each exercise. They can also add text notes, group exercises into supersets/circuits, and include warm-up/cool-down movements. Completed workouts can be saved as templates for future reuse. 
+
+
+
+
+
+
+Why it's important: It enables trainers to structure diverse and effective workout plans efficiently, varying parameters to fit specific trainee needs. 
+
+
+How it works at a high level: Trainers interact with a workout builder interface, pulling from the movement library, arranging exercises, and defining parameters before saving as a template. 
+
+
+
+
+
+4. Editing a Workout (Templates & Instances)
+
+What it does: This feature allows trainers to modify existing workout routines. 
+
+
+Editing Workout Templates: Trainers can change the title, description, and tags of a master workout plan. They can also reorder, add, or delete exercises, and modify exercise parameters (sets, reps, weight, time). Changes only affect 
+
+
+
+
+future assignments of the template. 
+
+
+
+Modifying a Workout Instance for a Client: Trainers can make unique changes to a specific workout already assigned to an individual client without affecting the original template. This includes changing the title, description, and tags specific to that client's workout, and managing exercises (reorder, add, delete, modify parameters). 
+
+
+
+
+
+
+Why it's important: Enhances trainer efficiency by allowing reuse of templates and enables client personalization by adapting workouts to individual needs without creating new ones from scratch. 
+
+How it works at a high level: Trainers access either a template editing interface or a client-specific workout instance interface to make modifications. Changes are saved and applied based on whether it's a template (future assignments) or an instance (immediate for that client). 
+
+
+
+
+
+5. Modifying a Movement based on Client Need (within a Workout Instance)
+
+What it does: This feature allows trainers to upload or assign specific instructional videos or GIFs for individual exercises within a client's assigned workout. These custom media files are visible only to that specific client and override the default movement library video. Trainers can also add specific notes or modify textual details for a movement in a client's workout. Changes are reflected immediately in the client's app. 
+
+
+
+
+
+
+Why it's important: Provides tailored visual guidance based on a trainee's fitness level, form, or equipment, improving safety and outcomes by reinforcing form and technique. 
+
+
+How it works at a high level: Within a client's specific workout instance, trainers can select an exercise and either upload a new video/GIF or choose from their media library, or add/edit text notes, which then display to the client. 
+
+
+
+
+
+6. Assigning a Client
+
+What it does: This feature connects existing clients within the system to trainers, establishing the core trainer-trainee relationship. It includes initial assignment of available clients to a trainer and a robust client transfer system. Clients can request to add or switch trainers, and trainers can request or send clients to other trainers. During transfers, specific protocols manage visibility, preserving workout history. Trainers are notified of transfer status (pending, declined) and can view client status. It also includes functionality to ensure inactive or deleted client accounts cannot be requested for transfer, and notifies trainers if a client cancels during a transfer. 
+
+
+
+
+
+
+Why it's important: Underpins the core trainer-trainee relationship, empowering trainers to manage rosters and deliver tailored experiences, while providing clarity for trainees. Crucial for data integrity and preventing ownership confusion. Also allows trainees to access content without a trainer. 
+
+
+
+
+How it works at a high level: Trainers access a list of available clients, select and assign them. For transfers, requests are initiated by trainers or clients, with notifications and status updates guiding the process. 
+
+
+
+
+7. Scheduling a Workout (Instance)
+
+What it does: Allows trainers to assign specific workout templates or existing workout instances to trainees on chosen dates, supporting one-time and recurring assignments. Trainers can view client schedules in a calendar format, reschedule workouts, and receive notifications for missed workouts or client rescheduling requests. Trainees see assigned workouts on a calendar, can request to reschedule trainer-assigned workouts, and can self-schedule purchased workouts. Notifications (push) are sent to trainees before scheduled workouts. 
+
+
+
+
+
+
+Why it's important: Organizes the training plan for trainees, provides clear visibility of upcoming activities, and enables trainers to manage and adapt schedules. 
+
+How it works at a high level: Trainers select a client, choose a workout (template or instance), set a date and recurrence (if any), and assign it. The system manages calendar views and notification triggers for both parties. 
+
+
+
+
+
+8. Unassigning a Client
+
+What it does: Enables a trainer to formally end their association with a trainee. Upon unassignment, the trainer is prompted for confirmation, the trainee is removed from the trainer's active client dashboard, and the trainer loses access to their current/historical data for that client. All past workout records remain accessible to the trainee. Future workouts previously assigned by the unassigned trainer remain visible to the trainee but include an indicator that the originating trainer is inactive. Trainees receive in-app and email notifications of unassignment. All trainee data is retained for potential re-engagement, and the system tracks current vs. past clients for reporting. 
+
+
+
+
+
+
+Why it's important: Maintains clear and accurate trainer-trainee relationships, allows trainers to manage their roster efficiently, preserves valuable workout history for trainees, ensures data hygiene, and reduces clutter. 
+
+
+How it works at a high level: Trainers initiate the unassignment, confirm the action, and the system updates relationship status, access permissions, and sends notifications. 
+
+
+
+
+
+9. Deleting a Workout (Templates & Instances)
+
+What it does: Allows trainers to delete both reusable workout templates and specific workout instances assigned to clients. 
+
+
+Deleting a Workout Template: Removes the template from availability for future assignments, without affecting existing client workouts based on that template. Past assignment history for the template is also removed from the trainer's view. 
+
+
+
+
+
+
+Deleting a Workout Instance: Allows trainers to remove upcoming client sessions with a confirmation and an "undo" option (within 30 days). If a workout instance has past completed data, the trainer is warned, but any recorded performance data is 
+
+
+
+always preserved for historical tracking, even if the workout itself is removed from the client's current schedule. Trainees do not receive notifications for deleted instances, and the workout simply disappears from their schedule. 
+
+
+
+
+
+
+Why it's important: Crucial for maintaining an organized and flexible platform, allowing trainers to manage content, correct errors, and adapt programs without losing valuable client progress data. Ensures trainees consistently see relevant, current assignments. 
+
+
+How it works at a high level: Trainers select a template or instance to delete. For instances, a confirmation and undo option are provided. The system handles the deletion logic, ensuring data retention for completed performance. 
+
+
+
+
+User Experience
+User Personas
+Trainer: A fitness professional who needs to efficiently manage multiple clients, create and customize workout programs, track progress, and communicate effectively. They prioritize organization, flexibility, and client success.
+
+Trainee: An individual seeking personalized fitness guidance. They need clear, easy-to-understand workout instructions, a reliable way to view their schedule and progress, and the ability to communicate with their trainer or manage their own schedule for self-purchased workouts. They value clarity, accessibility, and seeing their progress.
+
+Admin: Responsible for maintaining the core content of the platform, specifically the movement library. They need tools to add, categorize, and update movements and respond to trainer requests. They prioritize data accuracy and system scalability.
+
+Key User Flows
+Trainee Self-Signup
+Trainee lands on app/web signup page.
+
+Trainee inputs name, date of birth, and email. 
+
+Trainee receives a confirmation email. 
+
+Upon confirmation, Trainee is directed to their personal dashboard. 
+
+Trainer Assigns New Client
+Trainer navigates to client management section.
+
+Trainer views a list of available clients. 
+
+Trainer selects one or more clients to assign to themselves. 
+
+Trainer confirms the assignment. 
+
+Client is now associated with the trainer's account. 
+
+
+Trainer Builds & Assigns a Workout
+Trainer navigates to the workout builder.
+
+Trainer searches and selects movements from the global movement library. 
+
+Trainer adds movements, reorders them, and specifies sets, reps, weight/time. 
+
+Trainer can add notes or group exercises (supersets/circuits), and add warm-up/cool-down. 
+
+Trainer saves the workout as a template. 
+
+Trainer then schedules the saved workout template for a specific client on a chosen date (one-time or recurring). 
+
+
+Trainer Modifies a Client's Workout for Customization
+Trainer accesses a specific client's assigned workout instance.
+
+Trainer can modify the title, description, or tags for 
+
+this specific instance. 
+
+
+Trainer can reorder, add, or delete exercises within 
+
+this specific instance. 
+
+Trainer can modify sets, reps, weight/time for exercises within 
+
+this specific instance. 
+
+Trainer can upload a custom video/GIF or add specific notes for a movement within 
+
+this specific instance. 
+
+
+Changes are immediately reflected in the client's app. 
+
+
+Client Experiences Assigned Workout
+Trainee receives a push notification about an upcoming workout. 
+
+Trainee views their scheduled workouts on a calendar. 
+
+Trainee opens a workout to see exercises, sets, reps, weight/time, order, and notes. 
+
+Trainee views custom videos/GIFs and personalized notes for movements within their workout. 
+
+
+
+
+
+Trainee can request to reschedule a trainer-assigned workout. 
+
+Trainer Manages Client Transfer
+Trainer searches for a client by email to initiate a transfer request. 
+
+
+System checks if client is already in a transfer state and notifies trainer if so. 
+
+Trainer can request a client transfer from another trainer OR send a client to another trainer. 
+
+
+
+Receiving trainer is notified and can accept or decline the request. 
+
+
+
+Client's profile displays "Transfer Requested/Pending" status. 
+
+During pending transfer, old trainer's workout instance inputs are disabled. 
+
+Trainer can see a record of assignment/transfer history. 
+
+Trainer is notified if client cancels account during transfer. 
+
+Trainer Unassigns a Client
+Trainer selects a client to unassign from their active client list. 
+
+Trainer is prompted for confirmation. 
+
+
+
+Client is removed from trainer's active dashboard; trainer loses access to client's current/historical data. 
+
+
+
+Trainee receives in-app and email notifications. 
+
+
+
+Trainee can still view all past workout history and future workouts from the former trainer with a visual indicator. 
+
+
+Trainer Deletes Workout
+Template Deletion: Trainer selects a workout template to delete. Trainer is able to delete the template without affecting existing client workout instances. 
+
+
+
+Instance Deletion: Trainer selects an upcoming workout instance for a client to delete. 
+
+Trainer is prompted for confirmation. 
+
+
+
+Trainer has an "undo" option for 30 days. 
+
+If deleting a workout with past completed data, trainer is warned, but performance data is retained. 
+
+Workout disappears from trainee's app without notification. 
+
+UI/UX Considerations
+Intuitive Navigation: Clear pathways for trainers to access client management, workout building, and scheduling.
+
+Clear Visual Cues: For trainees, clear display of assigned workouts, progress, and indicators for former trainers on workouts. For trainers, clear status of client transfers and workout templates vs. instances.
+
+Responsive Design: The app should be functional and visually appealing on various devices (mobile, tablet, web).
+
+
+Confirmation Prompts: Implement confirmation prompts for critical actions like unassigning clients or deleting workouts/templates to prevent accidental data loss or relationship changes. 
+
+
+
+
+Notifications: Implement a robust notification system for key actions (transfer requests, unassignments, missed workouts, upcoming workouts) via in-app alerts, push notifications, and email. 
+
+
+
+
+
+
+Search and Filtering: Provide efficient search and filtering capabilities for clients, movements, and workout templates to aid trainers in finding relevant information quickly. 
+
+
+
+
+
+
+Calendar View: A clear and interactive calendar view for scheduling workouts, with the ability to see daily, weekly, or monthly views, and drill down into workout details. 
+
+
+
+Visual Movement Guidance: Prominently display videos/GIFs and descriptions for movements within workout views for trainees, and provide easy upload/selection for trainers. 
+
+
+
+
+
+
+Data Preservation: Ensure that critical historical data (workout performance, past client associations) is clearly communicated as being retained even when relationships or scheduled workouts are modified/deleted. 
+
+
+
+
+
+Technical Architecture
+System Components
+User Service: Manages trainee and trainer accounts, authentication, and profiles.
+
+Client Management Service: Handles trainer-trainee relationships, assignment, transfer logic, and unassignment.
+
+Movement Library Service: Stores and manages the global movement database, including videos/GIFs, descriptions, and categories. This service would also manage admin functionality for adding/editing movements and handling trainer requests for new variations.
+
+Workout Builder Service: Facilitates the creation and editing of workout templates (sets, reps, exercises, notes, structuring).
+
+Workout Instance Service: Manages specific workout instances assigned to clients, including modifications, custom movement videos/notes, and performance data inputs.
+
+Scheduling Service: Manages the assignment of workout instances to specific dates, recurring schedules, rescheduling requests, and missed workout tracking.
+
+Notification Service: Handles all in-app, push, and email notifications for trainers and trainees.
+
+Storage Service (Media): Stores uploaded videos and GIFs for movements and custom client movement videos.
+
+Database: Centralized data storage for all entities (users, clients, trainers, movements, workouts, schedules, performance data).
+
+Data Models
+User (Trainee/Trainer):
+
+userID (PK)
+
+email
+
+passwordHash
+
+firstName
+
+lastName
+
+dateOfBirth
+
+accountType (Trainee, Trainer, Admin)
+
+status (Active, Inactive, Pending Confirmation)
+
+creationDate
+
+lastLoginDate
+
+trainerClientLimit (for Trainers)
+
+ClientAssignment:
+
+assignmentID (PK)
+
+trainerID (FK to User)
+
+traineeID (FK to User)
+
+assignmentDate
+
+unassignmentDate (NULLable)
+
+status (Current, Past, TransferPending, TransferAccepted, TransferDeclined)
+
+initiatedBy (Trainer, Trainee, System)
+
+transferRequestedByTrainerID (FK to User, NULLable)
+
+transferAcceptedDeclinedByTrainerID (FK to User, NULLable)
+
+transferRequestDate (NULLable)
+
+transferCompletionDate (NULLable)
+
+clientTransferHistory (JSONB or separate table)
+
+Movement:
+
+movementID (PK)
+
+title
+
+description
+
+videoURL
+
+category (e.g., Lower Body, Upper Body)
+
+muscleGroups (Array/JSONB)
+
+creationDate
+
+lastModifiedDate
+
+isAdminAdded (Boolean)
+
+MovementRequest:
+
+requestID (PK)
+
+trainerID (FK to User)
+
+requestedMovementDetails (Text)
+
+status (Pending, Approved, Declined)
+
+submissionDate
+
+resolutionDate
+
+adminNotes
+
+WorkoutTemplate:
+
+templateID (PK)
+
+trainerID (FK to User)
+
+title
+
+description
+
+tags (Array/JSONB)
+
+creationDate
+
+lastModifiedDate
+
+exercises (JSONB: ordered array of exercise objects, each with movementID, sets, reps, weightType, weightValue, time, notes, isSuperset/Circuit, isWarmup/Cooldown)
+
+WorkoutInstance:
+
+instanceID (PK)
+
+templateID (FK to WorkoutTemplate, NULLable if custom)
+
+traineeID (FK to User)
+
+trainerID (FK to User)
+
+assignedDate
+
+scheduledDate
+
+recurs (Boolean)
+
+recurrencePattern (e.g., Daily, Weekly, SpecificDays)
+
+status (Scheduled, Completed, Missed, Rescheduled, Deleted)
+
+customTitle (NULLable, overrides template title)
+
+customDescription (NULLable, overrides template description)
+
+customTags (NULLable, overrides template tags)
+
+exercises (JSONB: ordered array of exercise objects, each with movementID, sets, reps, weightType, weightValue, time, notes, customVideoURL, customVideoTimestamp, isSuperset/Circuit, isWarmup/Cooldown)
+
+completionData (JSONB: recorded performance for each exercise)
+
+trainerAssigned (Boolean)
+
+traineeSelfScheduled (Boolean)
+
+isPastTrainerWorkout (Boolean, derived)
+
+deletedAt (timestamp for soft delete, NULLable)
+
+Notification:
+
+notificationID (PK)
+
+recipientID (FK to User)
+
+senderID (FK to User, NULLable)
+
+type (e.g., ClientTransferRequest, WorkoutScheduled, WorkoutMissed, Unassigned)
+
+message
+
+isRead (Boolean)
+
+createdAt
+
+deliveryMethod (InApp, Push, Email)
+
+relatedEntityID (FK to ClientAssignment, WorkoutInstance, etc.)
+
+APIs and Integrations
+RESTful APIs:
+
+/api/users/signup (Trainee signup)
+
+/api/movements (Admin: CRUD movements; Trainer: Read, Search, Filter)
+
+/api/movement-requests (Trainer: Create requests; Admin: Read, Update requests)
+
+/api/workouts/templates (Trainer: CRUD templates)
+
+/api/workouts/instances (Trainer: CRUD instances, schedule, modify; Trainee: Read, Request Reschedule, Self-schedule)
+
+/api/clients/assign (Trainer: Assign clients)
+
+/api/clients/transfer (Trainer/Trainee: Initiate/Accept/Decline transfers)
+
+/api/clients/unassign (Trainer: Unassign clients)
+
+/api/notifications (Read/Manage notifications)
+
+Third-Party Integrations:
+
+Email Service Provider (ESP): For sending confirmation emails, unassignment notifications, and other system emails.
+
+Push Notification Service: For sending real-time in-app and push notifications.
+
+Video Hosting/Streaming Service: For efficient storage and delivery of movement and custom workout videos/GIFs. Consideration for file formats (MP4, GIF). 
+
+
+Payment Gateway: (Future consideration, for trainer capacity/billing or paid workouts).
+
+Infrastructure Requirements
+Cloud-based infrastructure (AWS, GCP, Azure): For scalability, reliability, and global reach.
+
+Compute Instances: For hosting backend services (e.g., Kubernetes cluster for microservices).
+
+Database: Managed relational database (e.g., PostgreSQL, MySQL) for structured data.
+
+Object Storage: For storing media files (videos, GIFs) (e.g., S3, Google Cloud Storage).
+
+Content Delivery Network (CDN): To deliver media content efficiently to users globally.
+
+Caching Layer: (e.g., Redis) to improve performance for frequently accessed data.
+
+Monitoring and Logging: Tools for tracking application health, performance, and errors.
+
+CI/CD Pipeline: For automated testing, building, and deployment.
+
+Development Roadmap
+P0: Minimum Viable Product (MVP) - Core Functionality for Trainer-Led Workouts
+The goal of P0 is to get to something usable/visible on the front end that works, focusing on the essential features for a trainer to manage clients and assign basic workouts.
+
+P0-1: Account Creation & Core Profiles
+
+
+Trainee Self-Signup: Implement the full flow for new trainees to create an account (name, DOB, email, confirmation email, direct to dashboard). 
+
+
+Basic Trainer Profile: Ability for trainers to log in and access a basic dashboard.
+
+AC:
+
+Trainee can successfully register and log in.
+
+Trainee receives a confirmation email upon registration.
+
+Trainer can successfully log in and view an empty dashboard.
+
+P0-2: Movement Library Foundation (Admin & Trainer View)
+
+Admin: Add & Categorize Movements: Implement admin functionality to add new movements with title, description, and upload a video/GIF. Implement categorization (Lower Body, Upper Body, Muscle Groups). 
+
+
+Trainer: View & Search Movements: Implement trainer interface to view the movement library, search by name, and filter by categories. 
+
+AC:
+
+Admin can add a new movement with all required fields (title, description, video, categories).
+
+Admin can view a list of all movements.
+
+Trainer can view all movements in the library.
+
+Trainer can search for movements by name.
+
+Trainer can filter movements by category.
+
+P0-3: Client Assignment (Initial)
+
+Trainer: Assign Existing Client: Implement the ability for a trainer to view a list of available clients in the system and assign them to their account. Include a confirmation prompt. 
+
+
+Trainee: Trainer Association: Ensure trainees have a trainer associated with their account upon assignment. 
+
+AC:
+
+Trainer can see a list of unassigned trainees.
+
+Trainer can select and assign an unassigned trainee to their roster.
+
+Trainer receives a confirmation after assigning a client.
+
+Assigned client appears on the trainer's client list.
+
+Trainee's account reflects the assigned trainer.
+
+P0-4: Basic Workout Building (Template Only)
+
+
+Trainer: Create Workout Template: Allow trainers to select movements from the library, order them, and specify sets, reps, weight (lbs/bodyweight), or time for each exercise. 
+
+
+
+
+
+
+Trainer: Save Workout as Template: Ability to save the created workout as a reusable template. 
+
+AC:
+
+Trainer can create a new workout template.
+
+Trainer can add movements to the template and arrange their order.
+
+Trainer can define sets, reps, weight (lbs, bodyweight), or time for each movement.
+
+Trainer can successfully save a workout as a template.
+
+P0-5: Scheduling Basic Workout Instances
+
+
+Trainer: Schedule Workout for Client: Allow trainers to select a workout template and assign it to a client on a specific date. 
+
+
+Trainee: View Scheduled Workouts: Trainee can view trainer-assigned workouts on a basic calendar view showing date and workout title. 
+
+AC:
+
+Trainer can select a client and a workout template to schedule.
+
+Trainer can assign the workout to a specific date.
+
+Trainee can see the scheduled workout on their calendar with the correct date.
+
+Trainee can click into the scheduled workout to view exercises, sets, reps, and weight/time. 
+
+P1: Enhancements & Management
+P1-1: Full Workout Template Editing
+
+
+Trainer: Edit Template Properties: Modify title, description, tags of templates. 
+
+
+
+Trainer: Manage Exercises in Template: Add, delete, reorder exercises, modify sets/reps/weight for exercises within a template. 
+
+
+
+Template Change Logic: Ensure template changes only affect future assignments. 
+
+
+P1-2: Client-Specific Workout Instance Modification
+
+
+Trainer: Modify Instance Properties: Change title, description, tags for a client's specific assigned workout instance. 
+
+
+
+Trainer: Manage Exercises in Instance: Add, delete, reorder exercises, modify sets/reps/weight for exercises within a client's workout instance. 
+
+
+
+Real-time Updates for Trainee: Changes made to an instance are reflected immediately in the trainee's app. 
+
+
+P1-3: Custom Movement Guidance (within Workout Instance)
+
+
+Trainer: Upload/Select Custom Video/GIF: Ability to upload a new video/GIF or select from a media library for a specific movement within a client's workout instance. 
+
+
+
+Trainer: Add/Modify Custom Notes: Ability to add personalized textual instructions for a movement within a client's workout instance. 
+
+
+Trainee: View Custom Guidance: Trainee sees the specific video/GIF and notes, overriding default instructions. 
+
+
+
+
+Trainer: Remove Custom Guidance: Ability to revert to the default general instructional video/notes. 
+
+P1-4: Unassigning Clients
+
+
+Trainer: Unassign Client Flow: Implement the flow for trainers to unassign clients, including confirmation prompt. 
+
+
+Data Access Revocation: Immediately remove unassigned client from trainer's dashboard and revoke trainer's access to their data. 
+
+
+
+
+Trainee Data Retention: Ensure all past workout records for the trainee remain accessible to the trainee. 
+
+
+
+
+Future Workout Indicator: Future workouts from a former trainer remain visible to the trainee with a clear visual indicator. 
+
+
+
+
+Core Notifications for Unassignment: Implement in-app and email notifications for trainees upon unassignment. 
+
+
+
+
+System Tracking: Track current and past clients for accurate reporting. 
+
+
+
+P1-5: Deleting Workouts (Templates & Instances)
+
+
+Trainer: Delete Template: Implement template deletion without affecting existing instances. 
+
+
+
+Trainer: Delete Upcoming Instance: Allow deletion of upcoming client workout instances with confirmation prompt and 30-day "undo" capability. 
+
+
+Data Preservation for Deleted Instances: Ensure recorded performance data from deleted instances is retained. 
+
+
+
+Trainee View: Workout instance disappears from trainee app without notification. 
+
+
+Warning for Past Data: Warn trainer if attempting to delete an instance with past completed data. 
+
+P2: Advanced Scheduling & Client Relationships
+P2-1: Advanced Scheduling & Management
+
+
+Recurring Workouts: Trainer can set daily, weekly, or specific-day recurrence for scheduled workouts. 
+
+
+Trainer Calendar View Enhancements: Improve calendar view to show recurring patterns and frequencies. 
+
+
+Rescheduling Workouts: Trainer can reschedule previously assigned workouts. 
+
+
+Missed Workout Handling: Trainer is notified if a client misses a workout and can reschedule it. 
+
+
+
+Trainee Self-Scheduling: Trainees can self-schedule purchased workouts and reschedule them. 
+
+
+Upcoming Workout Notifications: Implement push notifications for trainees (night before/morning of). 
+
+P2-2: Client Transfer System
+
+
+Trainer-Initiated Transfer Request: Trainer can search by email and request a client transfer from another trainer. 
+
+
+
+Transfer Conflict Notification: Trainer is notified if a client is already in a transfer state. 
+
+
+Trainer Accept/Decline Transfer: Trainer can accept or decline transfer requests from other trainers. 
+
+
+
+Trainer-Send Client: Trainer can send a client to another trainer. 
+
+
+Client Status Display: Display 'Transfer Requested/Pending' status on client profiles for trainers. 
+
+
+Workout Input Lock: Disable/lock old trainer's workout instance inputs during pending transfer. 
+
+
+Trainer Transfer Notifications: Notify trainers if their request is declined. 
+
+
+Trainee-Initiated Transfer Request: Client can request a new trainer from their profile. 
+
+
+Trainer Notification for Client Request: Trainer is notified when a client requests them. 
+
+
+Inactive Client Transfer Prevention: Inactive/deleted client accounts cannot be requested for transfer. 
+
+
+Client Cancellation During Transfer: Notify trainer if a client cancels during transfer. 
+
+
+Client Transfer History Log: Record and display client assignment and transfer history. 
+
+P2-3: Advanced Workout Building (Templates)
+
+
+Weight Percentage: Trainer can specify a percentage range for weight for exercises. 
+
+
+Exercise Grouping: Trainer can group multiple exercises as supersets or circuits. 
+
+
+Warm-up/Cool-down: Trainer can add dedicated warm-up and cool-down movements. 
+
+
+Detailed Exercise Notes: Trainer can add specific notes/instructions to individual exercises within a template. 
+
+P3: Future Enhancements / Long-Term Vision
+Trainer-Initiated Client Creation: Allow trainers to create client accounts directly.
+
+Trainee Onboarding Questionnaire: Mandatory/optional questionnaire during signup (activity levels, goals) and integration with workout assignment.
+
+
+Workout Context for Re-added Clients: Define how historical workout context is handled for clients "just added" by a new trainer (not via formal transfer). 
+
+
+Comprehensive Notification System: Expand notification types, preferences, and delivery mechanisms (push, email) across all relevant actions. 
+
+
+Onboarding Experience Enhancements: Welcome messages and prompts for newly assigned clients (initial or transfer). 
+
+
+Client Communication during Transfers: Define communication trainees receive during transfer requests. 
+
+
+Trainer Client Limits & Pricing Integration: Integrate trainer client limits with pricing model; allow trainers to pay to increase capacity. 
+
+
+
+Re-assignment UI/Flow: Specific enhancements for smoothly re-assigning a past client. 
+
+
+Workout Details on Calendar: Define level of detail immediately visible on calendar. 
+
+
+Calendar View Customization/Filtering: Allow trainers to filter calendar views by client or workout type. 
+
+
+Trainee Historical Calendar View: Allow trainees to see historical view of scheduled (not completed) workouts. 
+
+
+Workout Request States: Define specific states for workout rescheduling requests (pending, approved, denied). 
+
+
+Modifying Recurring Workout Instances: Define behavior for modifying a single instance of a recurring workout. 
+
+
+Pushing Instance Changes to Template: Allow trainers to update original templates from modified workout instances, including conflict resolution. 
+
+
+Applying Instance Changes to Future Instances: Define how changes from one instance can be applied to all existing future instances of that workout template. 
+
+
+Movement Video Reusability: Allow trainers to reuse uploaded custom videos across multiple clients. 
+
+
+
+Fallback for No Video: Define fallback option if no video is uploaded for a movement. 
+
+
+
+Deletion of Past Workout Instances: Revisit the user experience for deleting completed workout instances, including stronger justification or prevention. 
+
+
+Movement Request Process Definition: Formal submission form, status updates, and turnaround times for trainer requests for new movement variations. 
+
+Logical Dependency Chain
+This chain is designed to build foundational elements first, then layers of complexity, ensuring a usable product at each stage.
+
+User Accounts (P0-1):
+
+Creating a Trainee Account (fundamental for any user interaction)
+
+Dependency: None
+
+Next step: Allows users to exist in the system, setting the stage for client assignment and content consumption.
+
+Core Content & Relationships (P0-2, P0-3):
+
+Managing Movements (Admin side first, then Trainer view)
+
+Dependency: None (Admin can populate independently)
+
+Next step: Provides the building blocks for workouts.
+
+Assigning a Client (Initial assignment only)
+
+Dependency: Creating a Trainee Account (clients must exist to be assigned)
+
+Next step: Establishes the trainer-trainee link necessary for personalized workouts.
+
+Workout Creation & Basic Delivery (P0-4, P0-5):
+
+Building a Workout (Template creation)
+
+Dependency: Managing Movements (workouts are built from movements)
+
+Next step: Creates reusable content for trainers.
+
+Scheduling a Workout (instance) (Basic one-time assignment of a template)
+
+Dependency: Building a Workout (templates must exist to be scheduled), Assigning a Client (must have a client to assign to)
+
+Next step: Delivers concrete workout plans to trainees.
+
+Refinement & Management (P1-1, P1-2, P1-3, P1-4, P1-5):
+
+Editing a Workout (Template & Instance editing)
+
+Dependency: Building a Workout (templates must exist to be edited), Scheduling a Workout (instances must exist to be edited)
+
+Next step: Allows trainers to refine and personalize workouts.
+
+Modifying a Movement based on client need (custom videos/notes within instance)
+
+Dependency: Editing a Workout (specifically instance editing, as this is client-specific modification)
+
+Next step: Deepens workout personalization for trainees.
+
+Unassigning a Client
+
+Dependency: Assigning a Client (a client must be assigned to be unassigned)
+
+Next step: Allows proper management of trainer rosters.
+
+Deleting a Workout (Templates & Instances)
+
+Dependency: Building a Workout (templates to delete), Scheduling a Workout (instances to delete)
+
+Next step: Enables content hygiene and management.
+
+Advanced Interactions (P2-1, P2-2, P2-3):
+
+Scheduling a Workout (instance) (Advanced features like recurrence, rescheduling, notifications, trainee self-scheduling)
+
+Dependency: Core Scheduling a Workout functionality
+
+Next step: Improves workflow and user experience around workout delivery.
+
+Assigning a Client (Client Transfer System)
+
+Dependency: Core Assigning a Client (to build on the existing relationship model)
+
+Next step: Provides robust relationship management.
+
+Building a Workout (Advanced features like weight percentages, grouping, warm-ups/cool-downs)
+
+Dependency: Core Building a Workout functionality
+
+Next step: Expands the complexity and flexibility of workout programs.
+
+Risks and Mitigations
+Technical Challenges (P0 & P1):
+
+Media Upload/Streaming (P0-2, P1-3): Handling various video/GIF formats, efficient storage, and smooth streaming.
+
+Mitigation: Research and select a robust third-party video hosting/streaming solution (e.g., Cloudinary, Vimeo API). Start with a limited set of supported file formats and expand based on need. Implement robust error handling for uploads.
+
+Real-time Updates (P1-2, P1-3): Ensuring immediate reflection of trainer changes in trainee app.
+
+Mitigation: Utilize WebSockets or similar real-time communication protocols. Implement efficient caching and invalidation strategies.
+
+Data Integrity during Transfers/Deletions (P1-4, P1-5, P2-2): Preserving workout history during client transfers and ensuring performance data is retained even when workouts are deleted.
+
+Mitigation: Implement clear data ownership rules and robust database transactions. Use soft deletes for critical entities (workouts, clients) where full deletion might cause data loss or auditing issues. Conduct thorough testing of all transfer and deletion scenarios, especially edge cases.
+
+Figuring out the MVP that we can build upon (Overall):
+
+Scope Creep: Tendency to add more features than initially planned for MVP.
+
+Mitigation: Strict adherence to P0 requirements. Clearly define "done" for each P0 task. Ruthlessly prioritize based on core user journey for trainer-led workout assignment. Use the "Logical Dependency Chain" to ensure foundational elements are prioritized.
+
+Underestimation of Complexity: Features that seem simple (e.g., notifications, search) can have hidden complexities.
+
+Mitigation: Conduct thorough technical spikes and design sessions for each major component. Break down features into smaller, manageable sub-tasks. Engage engineers early in the PRD refinement process.
+
+Resource Constraints (Overall):
+
+Limited Development Capacity: Not enough engineers/designers to build everything desired.
+
+Mitigation: Prioritize P0 features rigorously. Be prepared to cut features or delay them to future phases (P1, P2, P3). Focus on delivering a functional core product rather than a feature-rich but incomplete one. Continuously evaluate team bandwidth and adjust scope as needed.
+
+Skill Gaps: Team might lack expertise in specific areas (e.g., video streaming, complex notification systems).
+
+Mitigation: Invest in training, hire external consultants, or consider off-the-shelf solutions/APIs for specialized components where appropriate.
+
+Appendix
+Research Findings
+Trainer Needs: Trainers consistently seek efficient ways to manage client rosters, personalize workout plans without excessive manual effort, and track client progress. The ability to modify workouts on a client-specific basis is highly valued.
+
+Trainee Needs: Trainees require clear, accessible instructions for exercises, visual guidance, and a straightforward view of their assigned workouts. Data continuity (historical progress) is important, even if trainer relationships change.
+
+Market Gap: Many existing platforms either lack granular workout customization or robust client transfer/management features, leading to trainer frustration and data silos.
+
+Importance of Visuals: Exercise videos/GIFs are crucial for proper form and safety, especially for remote training. Customization of these visuals at the client level addresses unique needs.
+
+Technical Specifications
+API Standards: Adhere to RESTful principles, use JSON for data exchange.
+
+Authentication: Implement secure token-based authentication (e.g., JWT).
+
+Authorization: Role-based access control (RBAC) to differentiate between Trainer, Trainee, and Admin permissions.
+
+Database Schema: Detailed ERD (Entity-Relationship Diagram) for all data models.
+
+Video/GIF Guidelines:
+
+Supported formats: MP4, GIF (initial).
+
+Max file size: TBD (will depend on storage/streaming budget and user experience).
+
+Recommended aspect ratio/resolution for optimal viewing across devices.
+
+Notification Types: Define a comprehensive list of all notification events and their triggers.
+
+Transfer Protocol (Detailed):
+
+Define exact states (TransferRequested, TransferPending, TransferAccepted, TransferDeclined, Cancelled).
+
+Specify which data/access changes occur at each state (e.g., when inputs are disabled, when access is revoked/granted).
+
+Clarify ownership during pending transfers.
+
+Workout Deletion Logic (Detailed):
+
+Precise definition of soft delete mechanism for WorkoutInstance.
+
+Specific rules for warning trainer if completed data exists.
+
+Mechanism for the 30-day "undo" functionality (e.g., temporary storage, status flags).
