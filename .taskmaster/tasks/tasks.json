@@ -9,7 +9,7 @@
         "testStrategy": "Verify repository is created successfully and is accessible to all team members.",
         "priority": "high",
         "dependencies": [],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": []
       },
       {
@@ -28,7 +28,7 @@
             "description": "Create a user-friendly signup form for trainees to input their name, date of birth, and email.",
             "dependencies": [],
             "details": "The form should include fields for name, date of birth, and email, with appropriate labels and placeholders.",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Manual testing to ensure all fields are present and correctly labeled."
           },
           {
@@ -39,7 +39,7 @@
               1
             ],
             "details": "Validate that the name is not empty, the date of birth is a valid date, and the email is in the correct format.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Unit tests for validation functions and manual testing for form submission."
           },
           {
@@ -184,7 +184,7 @@
     ],
     "metadata": {
       "created": "2025-07-02T18:32:40.858Z",
-      "updated": "2025-07-02T18:46:42.609Z",
+      "updated": "2025-07-02T19:44:35.368Z",
       "description": "Tasks for master context"
     }
   }
