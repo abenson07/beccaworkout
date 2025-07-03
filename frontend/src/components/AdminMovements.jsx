@@ -33,6 +33,10 @@ export default function AdminMovements() {
   const [formErrors, setFormErrors] = useState({});
   const [editId, setEditId] = useState(null);
   const [toastMessage, setToastMessage] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [undoTimeout, setUndoTimeout] = useState(null);
+  const [lastDeleted, setLastDeleted] = useState(null);
 
   useEffect(() => {
     fetchMovements();
@@ -68,6 +72,16 @@ export default function AdminMovements() {
     });
     setEditId(movement.id);
     setSlideoutOpen(true);
+  }
+
+  function openDeleteModal(movement) {
+    setDeleteTarget(movement);
+    setShowDeleteModal(true);
+  }
+
+  function closeDeleteModal() {
+    setDeleteTarget(null);
+    setShowDeleteModal(false);
   }
 
   async function handleAddMovement(e) {
@@ -116,6 +130,38 @@ export default function AdminMovements() {
     setTimeout(() => setShowToast(false), 3000);
   }
 
+  async function handleDelete() {
+    if (!deleteTarget) return;
+    // Remove from table immediately
+    setMovements((prev) => prev.filter((m) => m.id !== deleteTarget.id));
+    setShowDeleteModal(false);
+    setToastMessage("Movement Deleted – Undo?");
+    setShowToast(true);
+    setLastDeleted(deleteTarget);
+    // Actually delete from Supabase
+    await supabase.from("movements").delete().eq("id", deleteTarget.id);
+    // Start undo timer
+    if (undoTimeout) clearTimeout(undoTimeout);
+    const timeout = setTimeout(() => {
+      setLastDeleted(null);
+      setShowToast(false);
+    }, 5000);
+    setUndoTimeout(timeout);
+  }
+
+  async function handleUndoDelete() {
+    if (!lastDeleted) return;
+    // Re-insert into Supabase
+    const { error } = await supabase.from("movements").insert([{ ...lastDeleted }]);
+    if (!error) {
+      fetchMovements();
+      setToastMessage("Movement Restored");
+      setTimeout(() => setShowToast(false), 3000);
+    }
+    setLastDeleted(null);
+    if (undoTimeout) clearTimeout(undoTimeout);
+  }
+
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: "#f7f8fa" }}>
       {/* Toast Notification */}
@@ -143,10 +189,21 @@ export default function AdminMovements() {
               boxShadow: "0 2px 12px rgba(0,0,0,0.10)",
               fontWeight: 600,
               fontSize: 16,
-              textAlign: "center"
+              textAlign: "center",
+              display: 'flex',
+              alignItems: 'center',
+              gap: 16
             }}
           >
             {toastMessage}
+            {toastMessage && toastMessage.includes('Undo') && lastDeleted && (
+              <button
+                onClick={handleUndoDelete}
+                style={{ marginLeft: 12, background: '#fff', color: '#2563eb', border: 'none', borderRadius: 4, padding: '6px 16px', fontWeight: 600, cursor: 'pointer' }}
+              >
+                Undo
+              </button>
+            )}
           </div>
         )}
       </div>
@@ -214,6 +271,13 @@ export default function AdminMovements() {
                           >
                             ✏️
                           </button>
+                          <button
+                            style={{ marginLeft: 8, background: "none", border: "none", cursor: "pointer", fontSize: 16, color: '#e11d48' }}
+                            title="Delete"
+                            onClick={() => openDeleteModal(m)}
+                          >
+                            🗑️
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -251,6 +315,30 @@ export default function AdminMovements() {
               {submitting ? (editId ? "Saving..." : "Adding...") : (editId ? "Save Changes" : "Add Movement")}
             </button>
           </form>
+        </div>
+      )}
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'rgba(0,0,0,0.18)',
+          zIndex: 300,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <div style={{ background: '#fff', borderRadius: 10, padding: 32, minWidth: 320, boxShadow: '0 2px 16px rgba(0,0,0,0.10)' }}>
+            <h3 style={{ marginTop: 0 }}>Delete Movement</h3>
+            <div style={{ marginBottom: 24 }}>Are you sure you want to delete this movement?</div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
+              <button onClick={closeDeleteModal} style={{ background: '#f3f4f6', color: '#222', border: 'none', borderRadius: 4, padding: '8px 18px', fontWeight: 600, cursor: 'pointer' }}>Cancel</button>
+              <button onClick={handleDelete} style={{ background: '#e11d48', color: '#fff', border: 'none', borderRadius: 4, padding: '8px 18px', fontWeight: 600, cursor: 'pointer' }}>Delete</button>
+            </div>
+          </div>
         </div>
       )}
     </div>
