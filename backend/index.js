@@ -3,6 +3,7 @@ dotenv.config();
 
 const express = require('express');
 const clientRouter = require('./routes/client');
+const movementsRouter = require('./routes/movements');
 
 console.log('SUPABASE_URL:', process.env.SUPABASE_URL);
 console.log('SUPABASE_ANON_KEY:', process.env.SUPABASE_ANON_KEY);
@@ -14,6 +15,8 @@ app.use(express.json());
 
 // Mount the /api/client route
 app.use('/api/client', clientRouter);
+// Mount the /api/movements routes
+app.use('/api', movementsRouter);
 
 app.get('/', (req, res) => {
   res.send('Backend is running');
