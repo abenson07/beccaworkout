@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 
 const movementFields = [
+  "movement_name",
   "type",
   "machine_name",
-  "movement_name",
   "description",
   "image_url",
   "video_url",
@@ -30,6 +30,7 @@ export default function AdminMovements() {
   const [submitError, setSubmitError] = useState("");
   // Toast state
   const [showToast, setShowToast] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
 
   useEffect(() => {
     fetchMovements();
@@ -44,10 +45,20 @@ export default function AdminMovements() {
 
   function handleFormChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setFormErrors({ ...formErrors, [e.target.name]: undefined });
   }
 
   async function handleAddMovement(e) {
     e.preventDefault();
+    // Validate movement_name
+    const errors = {};
+    if (!form.movement_name.trim()) {
+      errors.movement_name = "Movement name is required.";
+    }
+    setFormErrors(errors);
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
     setSubmitting(true);
     setSubmitError("");
     const { data, error } = await supabase.from("movements").insert([form]);
@@ -142,21 +153,19 @@ export default function AdminMovements() {
                 <table style={{ width: "100%", borderCollapse: "collapse" }}>
                   <thead>
                     <tr>
-                      <th>id</th>
                       {movementFields.map((field) => (
                         <th key={field} style={{ textAlign: "left", padding: 8, borderBottom: "1px solid #eee", fontWeight: 600 }}>{field.replace(/_/g, " ")}</th>
                       ))}
-                      <th>created_at</th>
+                      <th>id</th>
                     </tr>
                   </thead>
                   <tbody>
                     {movements.map((m) => (
                       <tr key={m.id} style={{ borderBottom: "1px solid #f0f0f0" }}>
-                        <td style={{ padding: 8, fontSize: 14 }}>{m.id}</td>
                         {movementFields.map((field) => (
                           <td key={field} style={{ padding: 8, fontSize: 14 }}>{m[field]}</td>
                         ))}
-                        <td style={{ padding: 8, fontSize: 14 }}>{m.created_at}</td>
+                        <td style={{ padding: 8, fontSize: 14 }}>{m.id}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -183,6 +192,9 @@ export default function AdminMovements() {
                   onChange={handleFormChange}
                   style={{ width: "100%", padding: 8, marginTop: 4, borderRadius: 4, border: "1px solid #ddd" }}
                 />
+                {formErrors[field] && (
+                  <span style={{ color: "red", fontSize: 13, marginLeft: 8 }}>{formErrors[field]}</span>
+                )}
               </label>
             ))}
             {submitError && <div style={{ color: "red", marginBottom: 8 }}>{submitError}</div>}
