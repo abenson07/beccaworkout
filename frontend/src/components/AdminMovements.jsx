@@ -31,6 +31,8 @@ export default function AdminMovements() {
   // Toast state
   const [showToast, setShowToast] = useState(false);
   const [formErrors, setFormErrors] = useState({});
+  const [editId, setEditId] = useState(null);
+  const [toastMessage, setToastMessage] = useState("");
 
   useEffect(() => {
     fetchMovements();
@@ -48,6 +50,26 @@ export default function AdminMovements() {
     setFormErrors({ ...formErrors, [e.target.name]: undefined });
   }
 
+  function openAddSlideout() {
+    setForm({ type: "", machine_name: "", movement_name: "", description: "", image_url: "", video_url: "", gif_url: "" });
+    setEditId(null);
+    setSlideoutOpen(true);
+  }
+
+  function openEditSlideout(movement) {
+    setForm({
+      type: movement.type || "",
+      machine_name: movement.machine_name || "",
+      movement_name: movement.movement_name || "",
+      description: movement.description || "",
+      image_url: movement.image_url || "",
+      video_url: movement.video_url || "",
+      gif_url: movement.gif_url || ""
+    });
+    setEditId(movement.id);
+    setSlideoutOpen(true);
+  }
+
   async function handleAddMovement(e) {
     e.preventDefault();
     // Validate movement_name
@@ -61,6 +83,24 @@ export default function AdminMovements() {
     }
     setSubmitting(true);
     setSubmitError("");
+    if (editId) {
+      // Edit mode
+      const { error } = await supabase.from("movements").update(form).eq("id", editId);
+      if (error) {
+        setSubmitError(error.message);
+        setSubmitting(false);
+        return;
+      }
+      setSlideoutOpen(false);
+      setEditId(null);
+      setForm({ type: "", machine_name: "", movement_name: "", description: "", image_url: "", video_url: "", gif_url: "" });
+      setSubmitting(false);
+      fetchMovements();
+      setToastMessage("Movement Updated");
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+      return;
+    }
     const { data, error } = await supabase.from("movements").insert([form]);
     if (error) {
       setSubmitError(error.message);
@@ -71,7 +111,7 @@ export default function AdminMovements() {
     setForm({ type: "", machine_name: "", movement_name: "", description: "", image_url: "", video_url: "", gif_url: "" });
     setSubmitting(false);
     fetchMovements();
-    // Show toast
+    setToastMessage("Movement Added");
     setShowToast(true);
     setTimeout(() => setShowToast(false), 3000);
   }
@@ -106,7 +146,7 @@ export default function AdminMovements() {
               textAlign: "center"
             }}
           >
-            Movement Added
+            {toastMessage}
           </div>
         )}
       </div>
@@ -144,7 +184,7 @@ export default function AdminMovements() {
           <>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
               <h2>Movements</h2>
-              <button onClick={() => setSlideoutOpen(true)} style={{ padding: "8px 16px", borderRadius: 4, background: "#2563eb", color: "#fff", border: "none" }}>Add Movement</button>
+              <button onClick={openAddSlideout} style={{ padding: "8px 16px", borderRadius: 4, background: "#2563eb", color: "#fff", border: "none" }}>Add Movement</button>
             </div>
             <div style={{ background: "#fff", borderRadius: 8, boxShadow: "0 1px 4px rgba(0,0,0,0.04)", padding: 24 }}>
               {loading ? (
@@ -165,7 +205,16 @@ export default function AdminMovements() {
                         {movementFields.map((field) => (
                           <td key={field} style={{ padding: 8, fontSize: 14 }}>{m[field]}</td>
                         ))}
-                        <td style={{ padding: 8, fontSize: 14 }}>{m.id}</td>
+                        <td style={{ padding: 8, fontSize: 14 }}>
+                          {m.id}
+                          <button
+                            style={{ marginLeft: 8, background: "none", border: "none", cursor: "pointer", fontSize: 16 }}
+                            title="Edit"
+                            onClick={() => openEditSlideout(m)}
+                          >
+                            ✏️
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -199,7 +248,7 @@ export default function AdminMovements() {
             ))}
             {submitError && <div style={{ color: "red", marginBottom: 8 }}>{submitError}</div>}
             <button type="submit" disabled={submitting} style={{ marginTop: 16, padding: "10px 0", background: "#2563eb", color: "#fff", border: "none", borderRadius: 4, fontWeight: 600 }}>
-              {submitting ? "Adding..." : "Add Movement"}
+              {submitting ? (editId ? "Saving..." : "Adding...") : (editId ? "Save Changes" : "Add Movement")}
             </button>
           </form>
         </div>
