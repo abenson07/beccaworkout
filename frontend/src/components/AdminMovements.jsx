@@ -207,34 +207,6 @@ export default function AdminMovements() {
           </div>
         )}
       </div>
-      {/* Sidebar */}
-      <aside style={{ width: 220, background: "#fff", borderRight: "1px solid #eee", padding: 24 }}>
-        <nav>
-          <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-            <li>
-              <button
-                style={{
-                  width: "100%",
-                  textAlign: "left",
-                  padding: "12px 16px",
-                  border: "none",
-                  background: activeView === "movements" ? "#e0e7ff" : "none",
-                  color: activeView === "movements" ? "#2563eb" : "#222",
-                  borderRadius: 6,
-                  fontWeight: 600,
-                  cursor: "pointer",
-                  marginBottom: 4
-                }}
-                onClick={() => setActiveView("movements")}
-                aria-current={activeView === "movements" ? "page" : undefined}
-              >
-                Movements
-              </button>
-            </li>
-            {/* Future nav items here */}
-          </ul>
-        </nav>
-      </aside>
       {/* Main Content */}
       <main style={{ flex: 1, padding: 32 }}>
         {activeView === "movements" && (
