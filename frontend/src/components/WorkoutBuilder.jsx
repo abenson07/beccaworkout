@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { supabase } from "../supabaseClient";
+import useMovements from "../useMovements";
 
 const MOCK_WORKOUTS = [
   {
@@ -37,9 +38,13 @@ const MOCK_WORKOUTS = [
 ];
 
 export default function WorkoutBuilder() {
+  const { movements, loading, error } = useMovements();
   const [workouts, setWorkouts] = useState(MOCK_WORKOUTS);
   const [showNewWorkout, setShowNewWorkout] = useState(false);
   const [newWorkoutName, setNewWorkoutName] = useState("");
+  const [search, setSearch] = useState("");
+  const [showAddMovement, setShowAddMovement] = useState(false);
+  const [addMovementWorkoutId, setAddMovementWorkoutId] = useState(null);
 
   function handleNewWorkout() {
     if (!newWorkoutName.trim()) return;
@@ -65,6 +70,31 @@ export default function WorkoutBuilder() {
       newWorkouts[workoutIdx].movements = [...movements]; // force new reference
       return [...newWorkouts];
     });
+  }
+
+  // In Add Movement modal, use the real movement list for suggestions
+  const movementNames = movements.map(m => m.movement_name);
+  const filteredSuggestions = movementNames.filter(s => s.toLowerCase().includes(search.toLowerCase()));
+
+  function handleShowAddMovement(workoutId) {
+    setAddMovementWorkoutId(workoutId);
+    setShowAddMovement(true);
+    setSearch("");
+  }
+
+  function handleCloseAddMovement() {
+    setShowAddMovement(false);
+    setAddMovementWorkoutId(null);
+    setSearch("");
+  }
+
+  function handleAddMovementToWorkout(movementName) {
+    setWorkouts(prev => prev.map(w =>
+      w.id === addMovementWorkoutId
+        ? { ...w, movements: [...w.movements, { id: Date.now(), name: movementName, type: "", sets: 3, reps: 12, notes: "" }] }
+        : w
+    ));
+    handleCloseAddMovement();
   }
 
   return (
@@ -115,7 +145,13 @@ export default function WorkoutBuilder() {
                         <input type="text" value={m.notes} style={{ flex: 1, fontSize: 16, padding: 8, border: '1.5px solid #bbb', borderRadius: 4 }} readOnly placeholder="Add special notes" />
                       </div>
                       <div style={{ color: '#444', fontSize: 15, marginBottom: 8 }}>
-                        Add rest | Add movement
+                        Add rest |
+                        <button
+                          onClick={() => handleShowAddMovement(w.id)}
+                          style={{ background: 'none', border: 'none', color: '#2563eb', fontWeight: 500, cursor: 'pointer', padding: 0, marginLeft: 4 }}
+                        >
+                          Add movement
+                        </button>
                       </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-end', minWidth: 90 }}>
@@ -148,6 +184,32 @@ export default function WorkoutBuilder() {
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
               <button onClick={() => setShowNewWorkout(false)} style={{ background: '#f3f4f6', color: '#222', border: 'none', borderRadius: 4, padding: '8px 18px', fontWeight: 600, cursor: 'pointer' }}>Cancel</button>
               <button onClick={handleNewWorkout} style={{ background: '#2563eb', color: '#fff', border: 'none', borderRadius: 4, padding: '8px 18px', fontWeight: 600, cursor: 'pointer' }}>Create</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showAddMovement && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.18)', zIndex: 300, display: 'flex', alignItems: 'center', justifyContent: 'center'
+        }}>
+          <div style={{ background: '#fff', borderRadius: 10, padding: 32, minWidth: 320, boxShadow: '0 2px 16px rgba(0,0,0,0.10)' }}>
+            <h3 style={{ marginTop: 0 }}>Add Movement</h3>
+            <input
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Search movements..."
+              style={{ width: '100%', padding: 8, marginBottom: 16, borderRadius: 4, border: '1px solid #ddd' }}
+            />
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, maxHeight: 120, overflowY: 'auto' }}>
+              {filteredSuggestions.map((s, i) => (
+                <li key={i}>
+                  <button onClick={() => handleAddMovementToWorkout(s)} style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', padding: 8, cursor: 'pointer', color: '#2563eb' }}>{s}</button>
+                </li>
+              ))}
+              {filteredSuggestions.length === 0 && <li style={{ color: '#888', padding: 8 }}>No results</li>}
+            </ul>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 12, marginTop: 16 }}>
+              <button onClick={handleCloseAddMovement} style={{ background: '#f3f4f6', color: '#222', border: 'none', borderRadius: 4, padding: '8px 18px', fontWeight: 600, cursor: 'pointer' }}>Cancel</button>
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { supabase } from "../supabaseClient";
+import React, { useState } from "react";
+import useMovements from "../useMovements";
 
 const movementFields = [
   "movement_name",
@@ -12,8 +12,7 @@ const movementFields = [
 ];
 
 export default function AdminMovements() {
-  const [movements, setMovements] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { movements, loading, error } = useMovements();
   const [slideoutOpen, setSlideoutOpen] = useState(false);
   const [activeView, setActiveView] = useState("movements");
   // Add Movement form state
@@ -37,17 +36,7 @@ export default function AdminMovements() {
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [undoTimeout, setUndoTimeout] = useState(null);
   const [lastDeleted, setLastDeleted] = useState(null);
-
-  useEffect(() => {
-    fetchMovements();
-  }, []);
-
-  async function fetchMovements() {
-    setLoading(true);
-    const { data, error } = await supabase.from("movements").select();
-    if (!error) setMovements(data);
-    setLoading(false);
-  }
+  const [movementsState, setMovements] = useState([]); // for optimistic updates
 
   function handleFormChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -97,65 +86,80 @@ export default function AdminMovements() {
     }
     setSubmitting(true);
     setSubmitError("");
-    if (editId) {
-      // Edit mode
-      const { error } = await supabase.from("movements").update(form).eq("id", editId);
-      if (error) {
-        setSubmitError(error.message);
-        setSubmitting(false);
-        return;
+    try {
+      let response, data;
+      if (editId) {
+        // Edit mode
+        response = await fetch(`/api/movements/${editId}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form)
+        });
+        data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Failed to update movement");
+        setToastMessage("Movement Updated");
+      } else {
+        response = await fetch("/api/movements", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form)
+        });
+        data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Failed to add movement");
+        setToastMessage("Movement Added");
       }
       setSlideoutOpen(false);
       setEditId(null);
       setForm({ type: "", machine_name: "", movement_name: "", description: "", image_url: "", video_url: "", gif_url: "" });
       setSubmitting(false);
-      fetchMovements();
-      setToastMessage("Movement Updated");
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
-      return;
-    }
-    const { data, error } = await supabase.from("movements").insert([form]);
-    if (error) {
-      setSubmitError(error.message);
+      // Optionally, refresh movements list here
+      // fetchMovements();
+    } catch (err) {
+      setSubmitError(err.message);
       setSubmitting(false);
-      return;
     }
-    setSlideoutOpen(false);
-    setForm({ type: "", machine_name: "", movement_name: "", description: "", image_url: "", video_url: "", gif_url: "" });
-    setSubmitting(false);
-    fetchMovements();
-    setToastMessage("Movement Added");
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
   }
 
   async function handleDelete() {
     if (!deleteTarget) return;
-    // Remove from table immediately
-    setMovements((prev) => prev.filter((m) => m.id !== deleteTarget.id));
     setShowDeleteModal(false);
     setToastMessage("Movement Deleted – Undo?");
     setShowToast(true);
     setLastDeleted(deleteTarget);
-    // Actually delete from Supabase
-    await supabase.from("movements").delete().eq("id", deleteTarget.id);
-    // Start undo timer
-    if (undoTimeout) clearTimeout(undoTimeout);
-    const timeout = setTimeout(() => {
-      setLastDeleted(null);
-      setShowToast(false);
-    }, 5000);
-    setUndoTimeout(timeout);
+    try {
+      const response = await fetch(`/api/movements/${deleteTarget.id}`, {
+        method: "DELETE"
+      });
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Failed to delete movement");
+      }
+      // Optionally, refresh movements list here
+      // fetchMovements();
+    } catch (err) {
+      setToastMessage(err.message);
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+    }
   }
 
   async function handleUndoDelete() {
     if (!lastDeleted) return;
-    // Re-insert into Supabase
-    const { error } = await supabase.from("movements").insert([{ ...lastDeleted }]);
-    if (!error) {
-      fetchMovements();
+    try {
+      const response = await fetch("/api/movements", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(lastDeleted)
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Failed to restore movement");
       setToastMessage("Movement Restored");
+      setTimeout(() => setShowToast(false), 3000);
+    } catch (err) {
+      setToastMessage(err.message);
+      setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
     }
     setLastDeleted(null);
