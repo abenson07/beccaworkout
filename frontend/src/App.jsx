@@ -1,27 +1,38 @@
 import React, { useState } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
-import ClientsView from './components/ClientsView';
-import TrainersView from './components/TrainersView';
-import WorkoutsView from './components/WorkoutsView';
-import MovementsView from './components/MovementsView';
+import Breadcrumbs from './components/Breadcrumbs';
+import ClientsView from './views/ClientsView';
+import ClientDetailView from './views/ClientDetailView';
+import TrainersView from './views/TrainersView';
+import TrainerDetailView from './views/TrainerDetailView';
+import TrainerClientDetailView from './views/TrainerClientDetailView';
+import TrainerWorkoutsView from './views/TrainerWorkoutsView';
+import WorkoutsView from './views/WorkoutsView';
+import MovementsView from './views/MovementsView';
+import EditWorkoutView from './views/EditWorkoutView';
 import './App.css';
 
-const viewComponents = {
-  clients: ClientsView,
-  trainers: TrainersView,
-  workouts: WorkoutsView,
-  movements: MovementsView,
-};
-
 export default function App() {
-  const [activeView, setActiveView] = useState('workouts');
-  const ViewComponent = viewComponents[activeView];
-
+  // Sidebar state is now handled by router location
   return (
     <div className="app-layout">
-      <Sidebar activeView={activeView} onChangeView={setActiveView} />
+      <Sidebar />
       <main className="main-view">
-        <ViewComponent />
+        <Breadcrumbs />
+        <Routes>
+          <Route path="/" element={<Navigate to="/clients" replace />} />
+          <Route path="/clients" element={<ClientsView />} />
+          <Route path="/clients/:clientId" element={<ClientDetailView />} />
+          <Route path="/trainers" element={<TrainersView />} />
+          <Route path="/trainers/:trainerId" element={<TrainerDetailView />} />
+          <Route path="/trainers/:trainerId/clients/:clientId" element={<TrainerClientDetailView />} />
+          <Route path="/trainers/:trainerId/workouts" element={<TrainerWorkoutsView />} />
+          <Route path="/workouts" element={<WorkoutsView />} />
+          <Route path="/workouts/:workoutId/edit" element={<EditWorkoutView />} />
+          <Route path="/workouts/new" element={<EditWorkoutView />} />
+          <Route path="/movements" element={<MovementsView />} />
+        </Routes>
       </main>
     </div>
   );
